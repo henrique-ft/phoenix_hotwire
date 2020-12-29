@@ -1,0 +1,26 @@
+<h1><%= gettext("Listing Todos") %></h1>
+
+<table>
+  <thead>
+    <tr>
+      <th><%= gettext("Title") %></th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for todo <- @todos do %>
+    <tr>
+      <td><%= todo.title %></td>
+
+      <td>
+        <span><%= link gettext("Show"), to: Routes.todo_path(@conn, :show, todo) %></span>
+        <span><%= link gettext("Edit"), to: Routes.todo_path(@conn, :edit, todo) %></span>
+        <span><%= link gettext("Delete"), to: Routes.todo_path(@conn, :delete, todo), method: :delete, data: [confirm: gettext("Are you sure?")] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link gettext("New Todo"), to: Routes.todo_path(@conn, :new) %></span>

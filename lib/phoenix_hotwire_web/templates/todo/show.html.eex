@@ -1,0 +1,13 @@
+<h1><%= gettext("Show Todo") %></h1>
+
+<ul>
+
+  <li>
+    <strong><%= gettext("Title") %>:</strong>
+    <%= @todo.title %>
+  </li>
+
+</ul>
+
+<span><%= link gettext("Edit"), to: Routes.todo_path(@conn, :edit, @todo) %></span>
+<span><%= link gettext("Back"), to: Routes.todo_path(@conn, :index) %></span>
