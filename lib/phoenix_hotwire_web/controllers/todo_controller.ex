@@ -18,18 +18,8 @@ defmodule PhoenixHotwireWeb.TodoController do
         |> redirect(to: Routes.todo_path(conn, :show, todo))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        put_resp_header(conn, "Content-Type", "text/html; turbo-stream; charset=utf-8")
-        |> put_status(200)
-        |> html("""
-<turbo-stream id="form" action="append" target="messages">
-  <template>
-    <div id="message_2">
-      error
-    </div>
-  </template>
-</turbo-stream>
-        """)
-        Turbo.append("messages", html("show.html"))
+        conn
+        |> stream_replace("_message.html", message: "erro")
     end
   end
 
@@ -50,20 +40,11 @@ defmodule PhoenixHotwireWeb.TodoController do
       {:ok, todo} ->
         conn
         |> put_flash(:info, gettext("Todo updated successfully."))
-        |> redirect(to: Routes.todo_path(conn, :show, todo))
+        |> redirect(to: Routes.todo_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        put_resp_header(conn, "Content-Type", "text/html; turbo-stream; charset=utf-8")
-        |> put_status(200)
-        |> html("""
-<turbo-stream id="form" action="append" target="messages">
-  <template>
-    <div id="message_2">
-      error
-    </div>
-  </template>
-</turbo-stream>
-          """)
+        conn
+        |> stream_replace("_message.html", message: "erro")
     end
   end
 
@@ -73,5 +54,12 @@ defmodule PhoenixHotwireWeb.TodoController do
     conn
     |> put_flash(:info, gettext("Todo deleted successfully."))
     |> redirect(to: Routes.todo_path(conn, :index))
+  end
+
+  defp stream_replace(conn, html, params) do
+    conn
+    |> put_resp_header("Content-Type", "text/html; turbo-stream; charset=utf-8")
+    |> put_layout(false)
+    |> render(html, params)
   end
 end

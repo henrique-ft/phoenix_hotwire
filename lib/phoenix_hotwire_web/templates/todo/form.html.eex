@@ -1,14 +1,16 @@
-<turbo-frame id="messages">
+<div id="_message">
   <div id="message_1">
   </div>
-</turbo-frame>
+</div>
 
 <%= form_for @changeset, @action, fn f -> %>
+  <turbo-frame id="messages2">
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
       <p><%= gettext("Oops, something went wrong! Please check the errors below.") %></p>
     </div>
   <% end %>
+  </turbo-frame>
 
   <%= label f, :title %>
   <%= text_input f, :title %>

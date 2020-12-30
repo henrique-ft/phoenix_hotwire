@@ -1,0 +1,11 @@
+<turbo-stream id="form" action="replace" target="_message">
+  <template>
+    <%= @message %>
+  </template>
+</turbo-stream>
+<turbo-stream id="mygod" action="append" target="messages2">
+  <template>
+    woooooooow
+    <%= @message %>
+  </template>
+</turbo-stream>
